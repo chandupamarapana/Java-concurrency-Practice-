@@ -1,7 +1,9 @@
 package threadCreationMethods;
 
+import java.util.concurrent.*;
+
 public class main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
         ThreadExtends threadOne = new ThreadExtends();
 
         threadOne.start();
@@ -17,5 +19,14 @@ public class main {
             }
         });
         threadThree.start();
+        Callable<Integer> task =  () -> {
+            return 10+20;
+        };
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        Future<Integer> result = executorService.submit(task);
+
+        System.out.println(result.get());
+        executorService.shutdown();
+
     }
 }
